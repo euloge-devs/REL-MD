@@ -1,18 +1,21 @@
-const express = require("express");
-const path = require("path");
+import express from "express";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const app = express();
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8000;
 
-// Sert le dossier public (quel que soit le nom/casse)
-app.use(express.static(path.resolve(__dirname, 'public')));
+// Permet de servir le dossier public
+app.use(express.static(path.join(__dirname, "public")));
 
-// Route d'accueil robuste
+// Route par défaut → index.html
 app.get("/", (req, res) => {
-  const indexPath = path.resolve(__dirname, "public/index.html");
-  console.log("Chemin index.html :", indexPath); // Debug
-  res.sendFile(indexPath);
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-app.listen(port, () => {
-  console.log("Serveur web REL-MD-BOT lancé sur le port " + port);
+app.listen(PORT, () => {
+  console.log(`Serveur web REL-MD-BOT lancé sur le port ${PORT}`);
 });
