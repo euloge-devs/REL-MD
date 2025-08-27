@@ -1,0 +1,44 @@
+<!-- index.html à la racine du projet -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>REL-MD-BOT SESSION GEN</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    /* ...styles inchangés... */
+  </style>
+</head>
+<body>
+  <h1>✨🔐 REL-MD-BOT SESSION GEN ✨</h1>
+
+  <form id="sessionForm" style="margin-bottom:20px;">
+    <input type="text" id="numero" name="numero" placeholder="Votre numéro WhatsApp" required style="padding:10px;border-radius:8px;border:none;">
+    <button type="submit" class="btn btn-code"><i class="fas fa-code"></i> Générer Code Pairé</button>
+  </form>
+  <button onclick="window.open('/qr?numero='+document.getElementById('numero').value)" class="btn btn-qr"><i class="fas fa-qrcode"></i> QR Code</button>
+  <button onclick="window.open('https://github.com/Euloge18/REl-MD')" class="btn btn-github"><i class="fab fa-github"></i> GitHub</button>
+  <button onclick="window.open('https://chat.whatsapp.com/TON-LIEN')" class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp Support</button>
+  <button onclick="window.open('https://t.me/TON-TELEGRAM')" class="btn btn-telegram"><i class="fab fa-telegram"></i> Telegram</button>
+
+  <div id="result"></div>
+  <div class="footer-text">🚀 By <b>Euloge</b> • REL-MD-BOT</div>
+
+  <script>
+    document.getElementById('sessionForm').onsubmit = async function(e) {
+      e.preventDefault();
+      const numero = document.getElementById('numero').value;
+      const res = await fetch('/generate-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ numero })
+      });
+      const data = await res.json();
+      document.getElementById('result').innerText = data.success
+        ? `✅ Session générée pour : ${data.sessionId} — Cliquez sur QR Code pour afficher le code à scanner`
+        : `❌ Erreur : ${data.message}`;
+    };
+  </script>
+</body>
+</html>
