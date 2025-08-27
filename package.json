@@ -5,7 +5,7 @@
   "main": "rel.js",
   "scripts": {
     "test": "test",
-  "start": "node rel.js"
+    "start": "node rel.js"
   },
   "repository": {
     "type": "git",
@@ -28,6 +28,7 @@
   "homepage": "https://github.com/euloge-devs/REL-MD#readme",
   "dependencies": {
     "@whiskeysockets/baileys": "^6.7.18",
-    "baileys": "^6.7.18"
+    "baileys": "^6.7.18",
+    "sequelize": "^6.37.7"
   }
 }
