@@ -65,17 +65,38 @@
       color: #00ffae;
       animation: fadeIn 1s ease-in-out;
     }
-    #numero { padding:10px; border-radius:8px; border:none; }
+    #qrModal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.8);
+      align-items: center; justify-content: center;
+      z-index: 1000;
+    }
+    #qrModal .modal-content {
+      background: #222;
+      padding: 30px 20px;
+      border-radius: 12px;
+      max-width: 90vw;
+      min-width: 300px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+      text-align: center;
+    }
+    #qrModal input {
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      margin-bottom: 10px;
+      width: 80%;
+      font-size: 1rem;
+    }
   </style>
 </head>
 <body>
   <h1>✨🔐 REL-MD-BOT SESSION GEN ✨</h1>
 
-  <form id="sessionForm" style="margin-bottom:20px;">
-    <input type="text" id="numero" name="numero" placeholder="Votre numéro WhatsApp" required>
-    <button type="submit" class="btn btn-code"><i class="fas fa-code"></i> Générer Code Pairé</button>
-  </form>
-  <button onclick="openQR()" class="btn btn-qr"><i class="fas fa-qrcode"></i> QR Code</button>
+  <button onclick="showQRForm()" class="btn btn-qr"><i class="fas fa-qrcode"></i> QR Code</button>
+  <button onclick="showQRForm()" class="btn btn-code"><i class="fas fa-code"></i> Générer Code Pairé</button>
   <button onclick="window.open('https://github.com/Euloge18/REl-MD-BOT')" class="btn btn-github"><i class="fab fa-github"></i> GitHub</button>
   <button onclick="window.open('https://chat.whatsapp.com/TON-LIEN')" class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp Support</button>
   <button onclick="window.open('https://t.me/TON-TELEGRAM')" class="btn btn-telegram"><i class="fab fa-telegram"></i> Telegram</button>
@@ -83,28 +104,47 @@
   <div id="result"></div>
   <div class="footer-text">🚀 By <b>Euloge</b> • REL-MD-BOT</div>
 
+  <!-- Modal pour entrer le numéro -->
+  <div id="qrModal">
+    <div class="modal-content">
+      <h2>Entrer votre numéro WhatsApp</h2>
+      <form id="qrForm">
+        <input type="text" id="numeroQR" name="numero" placeholder="Votre numéro WhatsApp" required>
+        <button type="submit" class="btn btn-code"><i class="fas fa-code"></i> Générer mon QR</button>
+      </form>
+      <div id="qrResult" style="margin-top:20px;"></div>
+      <button onclick="closeQRForm()" class="btn btn-github" style="margin-top:20px;">Fermer</button>
+    </div>
+  </div>
+
   <script>
-    document.getElementById('sessionForm').onsubmit = async function(e) {
+    function showQRForm() {
+      document.getElementById('qrModal').style.display = 'flex';
+      document.getElementById('qrResult').innerHTML = '';
+      document.getElementById('numeroQR').value = '';
+    }
+    function closeQRForm() {
+      document.getElementById('qrModal').style.display = 'none';
+    }
+    document.getElementById('qrForm').onsubmit = async function(e) {
       e.preventDefault();
-      const numero = document.getElementById('numero').value;
+      const numero = document.getElementById('numeroQR').value;
+      document.getElementById('qrResult').innerHTML = "Génération du QR code en cours...";
+      // Appel backend pour générer la session
       const res = await fetch('/generate-session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ numero })
       });
       const data = await res.json();
-      document.getElementById('result').innerText = data.success
-        ? `✅ Session générée pour : ${data.sessionId} — Cliquez sur QR Code pour afficher le code à scanner`
-        : `❌ Erreur : ${data.message}`;
-    };
-    function openQR() {
-      const numero = document.getElementById('numero').value;
-      if (!numero) {
-        alert("Veuillez entrer votre numéro d'abord !");
-        return;
+      if (data.success) {
+        // Ouvre le QR dans une nouvelle page
+        window.open('/qr?numero=' + encodeURIComponent(numero), '_blank');
+        document.getElementById('qrResult').innerHTML = "✅ QR code généré. Regardez la nouvelle page.";
+      } else {
+        document.getElementById('qrResult').innerHTML = "❌ Erreur : " + data.message;
       }
-      window.open('/qr?numero=' + encodeURIComponent(numero), '_blank');
-    }
+    };
   </script>
 </body>
 </html>
