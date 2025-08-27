@@ -3,134 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>REL-MD-BOT SESSION GEN</title>
+  <title>REL-MD QR SESSION</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="https://i.ibb.co/6b1p6Qk/20230730-120325.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    body {
-      background: linear-gradient(135deg, #354115, #010e12, #263630);
-      color: #fff;
-      font-family: 'Poppins', sans-serif;
-      text-align: center;
-      padding: 50px 20px;
-    }
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 40px;
-      animation: glow 2s infinite alternate;
-    }
-    @keyframes glow {
-      from { text-shadow: 0 0 10px #00f7ff, 0 0 20px #00c4ff; }
-      to { text-shadow: 0 0 20px #00ffae, 0 0 30px #00f7ff; }
-    }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      margin: 15px;
-      padding: 15px 25px;
-      font-size: 1.1rem;
-      font-weight: bold;
-      border-radius: 12px;
-      border: none;
-      cursor: pointer;
-      transition: transform 0.2s ease, background 0.3s ease;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    }
-    .btn i { margin-right: 10px; }
-    .btn:hover { transform: scale(1.1); }
-    .btn-code { background: #00c6ff; }
-    .btn-code:hover { background: #0096c7; }
-    .btn-qr { background: #ff9f1c; }
-    .btn-qr:hover { background: #ff6f00; }
-    .btn-github { background: #24292f; }
-    .btn-github:hover { background: #000; }
-    .btn-whatsapp { background: #25d366; }
-    .btn-whatsapp:hover { background: #128c7e; }
-    .btn-telegram { background: #0088cc; }
-    .btn-telegram:hover { background: #006fa1; }
-    .footer-text {
-      margin-top: 50px;
-      font-size: 0.9rem;
-      opacity: 0.7;
-      animation: fadeIn 3s ease-in-out;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 0.7; }
-    }
-    #result {
-      margin-top: 30px;
-      font-size: 1.2rem;
-      font-weight: bold;
-      color: #00ffae;
-      animation: fadeIn 1s ease-in-out;
-    }
-    #qrModal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      background: rgba(0,0,0,0.8);
-      align-items: center; justify-content: center;
-      z-index: 1000;
-    }
-    #qrModal .modal-content {
-      background: #222;
-      padding: 30px 20px;
-      border-radius: 12px;
-      max-width: 90vw;
-      min-width: 300px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-      text-align: center;
-    }
-    #qrModal input {
-      padding: 10px;
-      border-radius: 8px;
-      border: none;
-      margin-bottom: 10px;
-      width: 80%;
-      font-size: 1rem;
-    }
-  </style>
 </head>
 <body>
-  <h1>✨🔐 REL-MD-BOT SESSION GEN ✨</h1>
-
-  <button onclick="showQRForm()" class="btn btn-qr"><i class="fas fa-qrcode"></i> QR Code</button>
-  <button onclick="showQRForm()" class="btn btn-code"><i class="fas fa-code"></i> Générer Code Pairé</button>
-  <button onclick="window.open('https://github.com/Euloge18/REl-MD-BOT')" class="btn btn-github"><i class="fab fa-github"></i> GitHub</button>
-  <button onclick="window.open('https://chat.whatsapp.com/TON-LIEN')" class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp Support</button>
-  <button onclick="window.open('https://t.me/TON-TELEGRAM')" class="btn btn-telegram"><i class="fab fa-telegram"></i> Telegram</button>
-
-  <div id="result"></div>
-  <div class="footer-text">🚀 By <b>Euloge</b> • REL-MD-BOT</div>
-
-  <!-- Modal pour entrer le numéro -->
-  <div id="qrModal">
-    <div class="modal-content">
-      <h2>Entrer votre numéro WhatsApp</h2>
-      <form id="qrForm">
-        <input type="text" id="numeroQR" name="numero" placeholder="Votre numéro WhatsApp" required>
-        <button type="submit" class="btn btn-code"><i class="fas fa-code"></i> Générer mon QR</button>
-      </form>
-      <div id="qrResult" style="margin-top:20px;"></div>
-      <button onclick="closeQRForm()" class="btn btn-github" style="margin-top:20px;">Fermer</button>
+  <div class="container">
+    <img src="https://i.ibb.co/6b1p6Qk/20230730-120325.png" alt="Logo" class="logo">
+    <h1>✨🤖 REL-MD QR SESSION ✨</h1>
+    <p>Génère ton QR code WhatsApp Multi-Device en 1 clic !</p>
+    <button class="btn" id="generateBtn"><i class="fas fa-qrcode"></i> Générer QR Code</button>
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <span class="close" id="closeModal">&times;</span>
+        <h2>Entrer votre numéro WhatsApp</h2>
+        <form id="qrForm">
+          <input type="text" id="numeroQR" name="numero" placeholder="Votre numéro WhatsApp" required>
+          <button type="submit" class="btn"><i class="fas fa-code"></i> Générer mon QR</button>
+        </form>
+        <div id="qrResult" style="margin-top:20px;"></div>
+      </div>
     </div>
+    <footer>
+      <p>By <b>Carrel Euloge</b> • rel-bot 🚀🤖</p>
+    </footer>
   </div>
-
   <script>
-    function showQRForm() {
-      document.getElementById('qrModal').style.display = 'flex';
+    // Ouvre la modale
+    document.getElementById('generateBtn').onclick = function() {
+      document.getElementById('modal').style.display = 'block';
       document.getElementById('qrResult').innerHTML = '';
       document.getElementById('numeroQR').value = '';
-    }
-    function closeQRForm() {
-      document.getElementById('qrModal').style.display = 'none';
-    }
+    };
+    // Ferme la modale
+    document.getElementById('closeModal').onclick = function() {
+      document.getElementById('modal').style.display = 'none';
+    };
+    // Génère le QR code
     document.getElementById('qrForm').onsubmit = async function(e) {
       e.preventDefault();
       const numero = document.getElementById('numeroQR').value;
       document.getElementById('qrResult').innerHTML = "Génération du QR code en cours...";
-      // Appel backend pour générer la session
       const res = await fetch('/generate-session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -138,13 +52,18 @@
       });
       const data = await res.json();
       if (data.success) {
-        // Ouvre le QR dans une nouvelle page
         window.open('/qr?numero=' + encodeURIComponent(numero), '_blank');
         document.getElementById('qrResult').innerHTML = "✅ QR code généré. Regardez la nouvelle page.";
       } else {
         document.getElementById('qrResult').innerHTML = "❌ Erreur : " + data.message;
       }
     };
+    // Ferme la modale si on clique en dehors
+    window.onclick = function(event) {
+      if (event.target == document.getElementById('modal')) {
+        document.getElementById('modal').style.display = "none";
+      }
+    }
   </script>
 </body>
 </html>
