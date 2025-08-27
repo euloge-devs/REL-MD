@@ -1,67 +1,45 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>REL-MD QR SESSION</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="https://i.ibb.co/6b1p6Qk/20230730-120325.png">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>REL-MD-BOT - Générateur de Session</title>
+  <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
   <div class="container">
-    <img src="https://i.ibb.co/6b1p6Qk/20230730-120325.png" alt="Logo" class="logo">
-    <h1>✨🤖 REL-MD QR SESSION ✨</h1>
-    <p>Génère ton QR code WhatsApp Multi-Device en 1 clic !</p>
-    <button class="btn" id="generateBtn"><i class="fas fa-qrcode"></i> Générer QR Code</button>
-    <div id="modal" class="modal">
-      <div class="modal-content">
-        <span class="close" id="closeModal">&times;</span>
-        <h2>Entrer votre numéro WhatsApp</h2>
-        <form id="qrForm">
-          <input type="text" id="numeroQR" name="numero" placeholder="Votre numéro WhatsApp" required>
-          <button type="submit" class="btn"><i class="fas fa-code"></i> Générer mon QR</button>
-        </form>
-        <div id="qrResult" style="margin-top:20px;"></div>
+    <header>
+      <h1>🤖 REL-MD-BOT</h1>
+      <p>Générateur de session WhatsApp (QR & Pairing Code)</p>
+    </header>
+
+    <main>
+      <div class="card">
+        <h2>Connexion</h2>
+        <p>Choisissez une méthode pour connecter votre bot :</p>
+        <div class="btn-group">
+          <button onclick="generate('qr')">📸 Générer QR Code</button>
+          <button onclick="generate('code')">🔑 Générer Pairing Code</button>
+        </div>
+        <div id="output"></div>
       </div>
-    </div>
+    </main>
+
     <footer>
-      <p>By <b>Carrel Euloge</b> • rel-bot 🚀🤖</p>
+      <p>REL-MD-BOT © 2025 | By Carrel Euloge</p>
     </footer>
   </div>
+
   <script>
-    // Ouvre la modale
-    document.getElementById('generateBtn').onclick = function() {
-      document.getElementById('modal').style.display = 'block';
-      document.getElementById('qrResult').innerHTML = '';
-      document.getElementById('numeroQR').value = '';
-    };
-    // Ferme la modale
-    document.getElementById('closeModal').onclick = function() {
-      document.getElementById('modal').style.display = 'none';
-    };
-    // Génère le QR code
-    document.getElementById('qrForm').onsubmit = async function(e) {
-      e.preventDefault();
-      const numero = document.getElementById('numeroQR').value;
-      document.getElementById('qrResult').innerHTML = "Génération du QR code en cours...";
-      const res = await fetch('/generate-session', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ numero })
-      });
-      const data = await res.json();
-      if (data.success) {
-        window.open('/qr?numero=' + encodeURIComponent(numero), '_blank');
-        document.getElementById('qrResult').innerHTML = "✅ QR code généré. Regardez la nouvelle page.";
+    async function generate(type) {
+      const response = await fetch(`/generate?method=${type}`);
+      const data = await response.json();
+
+      const output = document.getElementById("output");
+      if (type === "qr") {
+        output.innerHTML = `<img src="${data.qr}" alt="QR Code" width="250">`;
       } else {
-        document.getElementById('qrResult').innerHTML = "❌ Erreur : " + data.message;
-      }
-    };
-    // Ferme la modale si on clique en dehors
-    window.onclick = function(event) {
-      if (event.target == document.getElementById('modal')) {
-        document.getElementById('modal').style.display = "none";
+        output.innerHTML = `<p><strong>Votre Pairing Code :</strong> ${data.code}</p>`;
       }
     }
   </script>
