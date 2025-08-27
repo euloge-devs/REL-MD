@@ -1,4 +1,3 @@
-<!-- index.html à la racine du projet -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -7,18 +6,77 @@
   <title>REL-MD-BOT SESSION GEN</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    /* ...styles inchangés... */
+    body {
+      background: linear-gradient(135deg, #354115, #010e12, #263630);
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      padding: 50px 20px;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 40px;
+      animation: glow 2s infinite alternate;
+    }
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #00f7ff, 0 0 20px #00c4ff; }
+      to { text-shadow: 0 0 20px #00ffae, 0 0 30px #00f7ff; }
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin: 15px;
+      padding: 15px 25px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+    .btn i { margin-right: 10px; }
+    .btn:hover { transform: scale(1.1); }
+    .btn-code { background: #00c6ff; }
+    .btn-code:hover { background: #0096c7; }
+    .btn-qr { background: #ff9f1c; }
+    .btn-qr:hover { background: #ff6f00; }
+    .btn-github { background: #24292f; }
+    .btn-github:hover { background: #000; }
+    .btn-whatsapp { background: #25d366; }
+    .btn-whatsapp:hover { background: #128c7e; }
+    .btn-telegram { background: #0088cc; }
+    .btn-telegram:hover { background: #006fa1; }
+    .footer-text {
+      margin-top: 50px;
+      font-size: 0.9rem;
+      opacity: 0.7;
+      animation: fadeIn 3s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 0.7; }
+    }
+    #result {
+      margin-top: 30px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #00ffae;
+      animation: fadeIn 1s ease-in-out;
+    }
+    #numero { padding:10px; border-radius:8px; border:none; }
   </style>
 </head>
 <body>
   <h1>✨🔐 REL-MD-BOT SESSION GEN ✨</h1>
 
   <form id="sessionForm" style="margin-bottom:20px;">
-    <input type="text" id="numero" name="numero" placeholder="Votre numéro WhatsApp" required style="padding:10px;border-radius:8px;border:none;">
+    <input type="text" id="numero" name="numero" placeholder="Votre numéro WhatsApp" required>
     <button type="submit" class="btn btn-code"><i class="fas fa-code"></i> Générer Code Pairé</button>
   </form>
-  <button onclick="window.open('/qr?numero='+document.getElementById('numero').value)" class="btn btn-qr"><i class="fas fa-qrcode"></i> QR Code</button>
-  <button onclick="window.open('https://github.com/Euloge18/REl-MD')" class="btn btn-github"><i class="fab fa-github"></i> GitHub</button>
+  <button onclick="openQR()" class="btn btn-qr"><i class="fas fa-qrcode"></i> QR Code</button>
+  <button onclick="window.open('https://github.com/Euloge18/REl-MD-BOT')" class="btn btn-github"><i class="fab fa-github"></i> GitHub</button>
   <button onclick="window.open('https://chat.whatsapp.com/TON-LIEN')" class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp Support</button>
   <button onclick="window.open('https://t.me/TON-TELEGRAM')" class="btn btn-telegram"><i class="fab fa-telegram"></i> Telegram</button>
 
@@ -39,6 +97,14 @@
         ? `✅ Session générée pour : ${data.sessionId} — Cliquez sur QR Code pour afficher le code à scanner`
         : `❌ Erreur : ${data.message}`;
     };
+    function openQR() {
+      const numero = document.getElementById('numero').value;
+      if (!numero) {
+        alert("Veuillez entrer votre numéro d'abord !");
+        return;
+      }
+      window.open('/qr?numero=' + encodeURIComponent(numero), '_blank');
+    }
   </script>
 </body>
 </html>
