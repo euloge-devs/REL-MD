@@ -16,21 +16,13 @@ const {
 } = require("@whiskeysockets/baileys");
 
 const { getMessage } = require("./lib/store");
-const getSession = require('./DataBase/session');
+const getSession = require('./data_base/session');
 const config = require("./set");
-
-const {
-  message_upsert,
-  group_participants_update,
-  connection_update,
-  dl_save_media_ms,
-  recup_msg
-} = require('./Rel_events');
 
 const {
   getSecondAllSessions,
   getSecondSession
-} = require('./DataBase/connect');
+} = require('./data_base/connect');
 
 const sessionsActives = new Set();
 const instancesSessions = new Map();
