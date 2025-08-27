@@ -4,7 +4,8 @@
   "description": "Bot Whatsapp multi-appareil developpé par Carrel Euloge",
   "main": "rel.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+  "start": "node rel.js"
   },
   "repository": {
     "type": "git",
