@@ -3,11 +3,14 @@ const path = require("path");
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Sert le dossier public
-app.use(express.static(path.join(__dirname, 'public')));
+// Sert le dossier public (quel que soit le nom/casse)
+app.use(express.static(path.resolve(__dirname, 'public')));
 
+// Route d'accueil robuste
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+  const indexPath = path.resolve(__dirname, "public/index.html");
+  console.log("Chemin index.html :", indexPath); // Debug
+  res.sendFile(indexPath);
 });
 
 app.listen(port, () => {
