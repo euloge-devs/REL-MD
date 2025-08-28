@@ -1,47 +1,20 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>REL-MD-BOT - Générateur de Session</title>
-  <link rel="stylesheet" href="/style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>REL-SESSION</title>
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>🤖 REL-MD-BOT</h1>
-      <p>Générateur de session WhatsApp (QR & Pairing Code)</p>
-    </header>
-
-    <main>
-      <div class="card">
-        <h2>Connexion</h2>
-        <p>Choisissez une méthode pour connecter votre bot :</p>
-        <div class="btn-group">
-          <button onclick="generate('qr')">📸 Générer QR Code</button>
-          <button onclick="generate('code')">🔑 Générer Pairing Code</button>
-        </div>
-        <div id="output"></div>
-      </div>
-    </main>
-
-    <footer>
-      <p>REL-MD-BOT © 2025 | By Carrel Euloge</p>
-    </footer>
+  <h1>REL-SESSION-GEN</h1>
+  <div class="buttons">
+    <button onclick="location.href='/generate?method=code'">Pair Code</button>
+    <button onclick="location.href='/generate?method=qr'">QR Code</button>
+    <button onclick="window.open('https://github.com/Euloge-devs/REl-MD')">GitHub</button>
+    <button onclick="window.open('https://chat.whatsapp.com/TON-LIEN')">WhatsApp Support</button>
+    <button onclick="window.open('https://t.me/TON-TELEGRAM')">Telegram</button>
   </div>
-
-  <script>
-    async function generate(type) {
-      const response = await fetch(`/generate?method=${type}`);
-      const data = await response.json();
-
-      const output = document.getElementById("output");
-      if (type === "qr") {
-        output.innerHTML = `<img src="${data.qr}" alt="QR Code" width="250">`;
-      } else {
-        output.innerHTML = `<p><strong>Votre Pairing Code :</strong> ${data.code}</p>`;
-      }
-    }
-  </script>
+  <footer>By Euloge • REL-MD-BOT</footer>
 </body>
 </html>
