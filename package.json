@@ -2,10 +2,10 @@
   "name": "rel-md",
   "version": "2.0.0",
   "description": "Bot Whatsapp multi-appareil developpé par Carrel Euloge",
-  "main": "web.js",
+  "main": "index.js",
   "scripts": {
     "test": "test",
-    "start": "node web.js"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -38,7 +38,8 @@
     "pino": "^9.9.0",
     "qrcode": "^1.5.4",
     "qrcode-terminal": "^0.12.0",
-    "sequelize": "^6.37.7"
+    "sequelize": "^6.37.7",
+    "fs-extra": "^11.2.0"
   },
   "directories": {
     "lib": "lib"

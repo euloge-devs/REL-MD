@@ -219,8 +219,8 @@ app.get('/', (req, res) => {
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
           display: flex; justify-content: center; align-items: center;
-          height: 100vh; background-color: #121212;
-          font-family: Arial, sans-serif; color: #fff;
+          height: 100vh; background-color: #3d47b5ff;
+          font-family: Arial, sans-serif; color: #49293cff;
           overflow: hidden;
         }
         .content {
@@ -240,8 +240,8 @@ app.get('/', (req, res) => {
     </head>
     <body>
       <div class="content">
-        <h1>Bienvenue sur rel-MD</h1>
-        <p>Votre assistant WhatsApp</p>
+        <h1>Bienvenue sur REL-MD</h1>
+        <p>Votre assistant WhatsApp By carrel Euloge</p>
       </div>
     </body>
     </html>
